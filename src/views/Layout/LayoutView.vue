@@ -4,7 +4,9 @@ import Header from '@/views/Layout/component/HeaderView.vue'
 import Banner from '@/views/Layout/component/BannerView.vue'
 import Recommendation from '@/views/Layout/component/RecommendationView.vue'
 import NewRelease from '@/views/Layout/component/NewRelease.vue'
+import PopularReads from '@/views/Layout/component/PopularReads.vue'
 import Footer from '@/views/Layout/component/FooterView.vue'
+import Login from '@/views/Layout/component/LoginView.vue'
 import { ref, onMounted } from 'vue'
 import { fetchBookListFun } from './api/api.ts'
 import type { Book } from '@/types/book'
@@ -25,6 +27,7 @@ onMounted(async () => {
     getBannerList()
     getRecommendations()
     getRelease()
+    getPopularList()
   }
 })
 
@@ -102,27 +105,48 @@ const getRecommendations = () => {
   }
 }
 
+const popularList = ref<Book[]>([])
+const getPopularList = () => {
+  popularList.value = bookList.value.slice(11)
+}
 const newReleaseList = ref<Book[]>([])
 const getRelease = () => {
   newReleaseList.value = bookList.value.slice(7, 11)
+}
+
+const showLogin = ref(false)
+const showLoginView = () => {
+  console.log('showLogin', showLogin.value)
+  showLogin.value = !showLogin.value
 }
 </script>
 
 <template>
   <!-- <Suspense>
     <template #default> -->
-  <Nav></Nav>
-  <Header></Header>
-  <!-- <Empty></Empty> -->
-  <div v-loading="loading">
-    <Banner :bannerList="bannerList"></Banner>
-    <Recommendation :todayRecommendations="recommendationList"></Recommendation>
-    <NewRelease :newRelease="newReleaseList"></NewRelease>
+  <div style="position: relative">
+    <Nav @showLoginView="showLoginView"></Nav>
+    <Header></Header>
+    <!-- <Empty></Empty> -->
+    <div v-loading="loading">
+      <Banner :bannerList="bannerList"></Banner>
+      <Recommendation :todayRecommendations="recommendationList"></Recommendation>
+      <NewRelease :newRelease="newReleaseList"></NewRelease>
+      <PopularReads :popularReads="popularList"></PopularReads>
+    </div>
+
+    <Footer></Footer>
+    <Login class="login-view" v-if="showLogin"></Login>
   </div>
 
-  <Footer></Footer>
   <!-- </template>
   </Suspense> -->
 </template>
 
-<style></style>
+<style>
+.login-view {
+  position: absolute;
+  right: 0;
+  top: 2rem;
+}
+</style>

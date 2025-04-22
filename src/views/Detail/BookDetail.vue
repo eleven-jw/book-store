@@ -3,21 +3,22 @@
     <div><img class="book-image" width="450" height="450" :src="coverUrl" /></div>
     <div class="book-detail">
       <span class="detail-title">{{ bookDetail.title }}</span>
-      <span class="detail-author">Written By:{{ bookDetail.author }}</span>
-      <span class="detail-price">Suprised Price:{{ bookDetail.price }}</span>
-      <span class="detail-availableStock">Now we have :{{ bookDetail.availableStock }}</span>
+      <span class="detail-author">Written By: {{ bookDetail.author }}</span>
+      <span class="detail-price">Suprised Price: {{ bookDetail.price }} $</span>
+      <span class="detail-availableStock">Now we have: {{ bookDetail.availableStock }}</span>
 
-      <div>
+      <div class="footer">
         <el-input-number class="counter" v-model="count" :min="0" :max="maxCount" />
         <el-button
           class="add-button"
           type="primary"
           @click="handleAdd(bookDetail)"
           :disabled="disabled"
-          >ADD TO CART
+        >
+          ADD TO CART
         </el-button>
-        <el-button class="add-button" type="primary" @click="handleBuy(bookDetail.id)"
-          >BUY NOW
+        <el-button class="add-button" type="primary" @click="handleBuy(bookDetail.id)">
+          BUY NOW
         </el-button>
       </div>
     </div>
@@ -106,11 +107,17 @@ onMounted(() => {
 .detail-title {
   font-size: 2rem;
   font-weight: 800;
-  color: #666;
+  color: #333333;
 }
 .detail-author {
+  font-size: 1.25rem;
+  line-height: 1, 5rem;
+  color: #666666;
 }
 
+.footer {
+  margin-top: 1.25rem;
+}
 .counter {
   margin-right: 1.25rem;
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import book6 from '@/assets/images/cover/6.jpg'
 import type { Book, BookList } from '@/types/book'
 
 defineProps<{
@@ -9,12 +8,10 @@ defineProps<{
 
 const router = useRouter()
 const handleClick = (book: Book) => {
-  console.log('book', book)
   router.push({
     name: 'Detail',
-    params: {
-      id: book.id,
-    },
+    params: { id: book.id.toString() },
+    query: { url: book.url },
   })
 }
 </script>
@@ -33,53 +30,27 @@ const handleClick = (book: Book) => {
         </el-col>
         <el-col :span="16">
           <el-row :gutter="10">
-            <el-col :span="8"
-              ><img :src="todayRecommendations[0]?.url" class="book-cover big"
-            /></el-col>
-            <el-col :span="16">
-              <el-row :gutter="10">
-                <el-col :span="12">
-                  <el-row :gutter="10">
-                    <el-col :span="12">
-                      <img :src="todayRecommendations[1]?.url" class="book-cover"
-                    /></el-col>
-                    <el-col :span="12"
-                      ><img :src="todayRecommendations[2]?.url" class="book-cover"
-                    /></el-col>
-                  </el-row>
-                  <el-row :gutter="10">
-                    <el-col :span="12"
-                      ><img :src="todayRecommendations[3]?.url" class="book-cover"
-                    /></el-col>
-                    <el-col :span="12"
-                      ><img :src="todayRecommendations[4]?.url" class="book-cover"
-                    /></el-col>
-                  </el-row>
-                </el-col>
-              </el-row>
+            <el-col :span="8" @click="handleClick(todayRecommendations[0])">
+              <img :src="todayRecommendations[0]?.url" class="book-cover big" />
             </el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-    </div>
-
-    <div class="title">Popular Reads</div>
-    <div class="today-wrapper">
-      <el-row :gutter="10">
-        <el-col :span="8"><div>121212</div></el-col>
-        <el-col :span="16">
-          <el-row :gutter="10">
-            <el-col :span="8"><img :src="book6" class="book-cover" /></el-col>
             <el-col :span="16">
               <el-row :gutter="10">
                 <el-col :span="12">
                   <el-row :gutter="10">
-                    <el-col :span="12"><img :src="book6" class="book-cover" /></el-col>
-                    <el-col :span="12"><img :src="book6" class="book-cover" /></el-col>
+                    <el-col :span="12" @click="handleClick(todayRecommendations[1])">
+                      <img :src="todayRecommendations[1]?.url" class="book-cover" />
+                    </el-col>
+                    <el-col :span="12" @click="handleClick(todayRecommendations[2])">
+                      <img :src="todayRecommendations[2]?.url" class="book-cover" />
+                    </el-col>
                   </el-row>
                   <el-row :gutter="10">
-                    <el-col :span="12"><img :src="book6" class="book-cover" /></el-col>
-                    <el-col :span="12"><img :src="book6" class="book-cover" /></el-col>
+                    <el-col :span="12" @click="handleClick(todayRecommendations[3])">
+                      <img :src="todayRecommendations[3]?.url" class="book-cover" />
+                    </el-col>
+                    <el-col :span="12" @click="handleClick(todayRecommendations[4])">
+                      <img :src="todayRecommendations[4]?.url" class="book-cover" />
+                    </el-col>
                   </el-row>
                 </el-col>
               </el-row>
@@ -91,7 +62,7 @@ const handleClick = (book: Book) => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .today-wrapper {
   width: 60rem;
   margin: 3rem auto;
@@ -125,11 +96,5 @@ const handleClick = (book: Book) => {
   font-weight: 800;
   font-size: 1.375rem;
   text-align: center;
-}
-.new-release-col {
-  text-align: center;
-}
-.new-release-col-name {
-  font-weight: 500;
 }
 </style>

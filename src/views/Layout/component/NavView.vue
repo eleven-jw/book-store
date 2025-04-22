@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { defineEmits } from 'vue'
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
+const emit = defineEmits(['showLoginView'])
 const handleContact = () => {
   console.log('CONTACT')
 }
@@ -11,9 +13,8 @@ const handleRegister = () => {
   console.log('register')
 }
 const handleSignIn = () => {
-  router.push({
-    name: 'Login',
-  })
+  console.log('showLoginView')
+  emit('showLoginView')
 }
 // const handleSelect = (key: string, keyPath: string[]) => {
 //   console.log(key, keyPath)

@@ -39,7 +39,7 @@ const handleClick = (book: Book) => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .today-wrapper {
   width: 60rem;
   margin: 3rem auto;

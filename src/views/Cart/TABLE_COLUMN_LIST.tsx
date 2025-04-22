@@ -1,4 +1,5 @@
 export const CONFIG_TABLE_LIST = [
+  { type: 'selection', with: 55 },
   {
     prop: 'sid',
     label: '序号',

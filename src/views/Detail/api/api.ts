@@ -1,6 +1,11 @@
 import request from '@/apis/request'
+import type { Book } from '@/types/book'
+// import type MyResponse from '@/types/globle'
 
-export function fetchBookDetailFn(bookId: number) {
+interface BookDetaiResponse {
+  book: Book
+}
+export function fetchBookDetailFn(bookId: number): Promise<BookDetaiResponse> {
   return request.get(`/${bookId}`, {
     extra: {
       showErrorToast: true, // 强制显示错误提示
@@ -8,6 +13,10 @@ export function fetchBookDetailFn(bookId: number) {
   })
 }
 
-export function purchaseBookFn(bookId: number) {
+interface PurchaseResponse {
+  book: Book
+  message: string
+}
+export function purchaseBookFn(bookId: number): Promise<PurchaseResponse> {
   return request.post(`/${bookId}/purchase`)
 }
