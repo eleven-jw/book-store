@@ -1,20 +1,14 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { defineProps } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 import type { Book, BookList } from '@/types/common'
 
 defineProps<{
   bannerList: BookList
 }>()
 
-const router = useRouter()
+const emit = defineEmits(['handleClick'])
 const handleClick = (book: Book) => {
-  router.push({
-    name: 'Detail',
-    params: { id: book.id.toString() },
-    query: { url: book.url },
-  })
+  emit('handleClick', book)
 }
 </script>
 
@@ -23,7 +17,6 @@ const handleClick = (book: Book) => {
     <el-carousel :interval="5000" arrow="always">
       <el-carousel-item v-for="book in bannerList" :key="book.id">
         <div @click="handleClick(book)">
-          <!-- <img src="@/assets/images/bookCover.png" /> -->
           <img :src="book.url" style="width: 100%; height: 100%" />
           <span>{{ book.title }}</span>
         </div>

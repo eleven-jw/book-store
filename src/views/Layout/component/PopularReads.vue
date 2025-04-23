@@ -1,18 +1,13 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import type { Book, BookList } from '@/types/common'
 
 defineProps<{
   popularReads: BookList
 }>()
 
-const router = useRouter()
+const emit = defineEmits(['handleClick'])
 const handleClick = (book: Book) => {
-  router.push({
-    name: 'Detail',
-    params: { id: book.id.toString() },
-    query: { url: book.url },
-  })
+  emit('handleClick', book)
 }
 </script>
 

@@ -2,7 +2,7 @@ export const CONFIG_TABLE_LIST = [
   { type: 'selection', with: 55 },
   {
     prop: 'sid',
-    label: '序号',
+    label: '',
     render({ $index }: { $index: number }) {
       return <span>{$index + 1}</span>
     },

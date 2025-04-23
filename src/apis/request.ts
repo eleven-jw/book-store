@@ -33,7 +33,7 @@ service.interceptors.request.use(
   },
 )
 
-// response interceptor 响应拦截器
+// response interceptor
 service.interceptors.response.use(
   (response: MyResponse) => {
     console.log('response', response)

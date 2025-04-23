@@ -29,16 +29,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-// import { useRouter } from 'vue-router'
 const searchContent = ref('')
-// const total = ref(0)
-// const router = useRouter()
-// const handleClick = () => {
-//   router.push({
-//     name: 'Cart',
-//   })
-// }
-//
 </script>
 
 <template>

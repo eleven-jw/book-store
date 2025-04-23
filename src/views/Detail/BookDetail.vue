@@ -50,10 +50,9 @@ const getBookDetail = async () => {
     const { book } = await fetchBookDetailFn(Number(bookId))
     console.log('book:', book)
     bookDetail.value = book
-    console.log('获取图书详情成功:', bookDetail.value)
     maxCount.value = bookDetail.value.availableStock
   } catch (error) {
-    console.error('获取图书详情失败:', error)
+    console.error('fet book detail error:', error)
   }
 }
 

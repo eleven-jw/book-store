@@ -1,18 +1,3 @@
-<style>
-.footer-wrapper {
-  background-color: black;
-  height: 10rem;
-}
-.footer-content-wrapper {
-  color: white;
-  display: flex;
-  justify-content: space-around;
-}
-.footer-image {
-  width: 5rem;
-  height: 5rem;
-}
-</style>
 <script setup lang="ts">
 import QRcode from '@/assets/images/QRcode.jpg'
 </script>
@@ -38,3 +23,19 @@ import QRcode from '@/assets/images/QRcode.jpg'
     </div>
   </section>
 </template>
+
+<style>
+.footer-wrapper {
+  background-color: black;
+  height: 10rem;
+}
+.footer-content-wrapper {
+  color: white;
+  display: flex;
+  justify-content: space-around;
+}
+.footer-image {
+  width: 5rem;
+  height: 5rem;
+}
+</style>

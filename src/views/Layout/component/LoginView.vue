@@ -33,6 +33,7 @@ const rules = ref<FormRules>({
       message: 'Please input password',
       trigger: 'change',
     },
+    { min: 6, message: 'Length should at least 6', trigger: 'blur' },
   ],
 })
 
@@ -80,8 +81,8 @@ const handleCancel = () => {
 
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="handleCancel">取消</el-button>
-          <el-button type="primary" @click="handleConfirm">登录</el-button>
+          <el-button @click="handleCancel">cancel</el-button>
+          <el-button type="primary" @click="handleConfirm">confirm</el-button>
         </span>
       </template>
     </el-dialog>

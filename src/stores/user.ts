@@ -18,7 +18,8 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function getData() {
-    return JSON.parse(localStorage.getItem(USER_INFO_KEY) || '{}')
+    const { name = '', password = '' } = JSON.parse(localStorage.getItem(USER_INFO_KEY) || '{}')
+    return { name, password }
   }
 
   return { userInfo, login, logout }

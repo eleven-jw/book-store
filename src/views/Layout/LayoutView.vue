@@ -10,6 +10,7 @@ import Login from '@/views/Layout/component/LoginView.vue'
 import { ref, onMounted } from 'vue'
 import { fetchBookListFun } from './api/api.ts'
 import type { Book, User } from '@/types/common.ts'
+import { useRouter } from 'vue-router'
 import bookCover1 from '@/assets/images/cover/1.jpg'
 import bookCover2 from '@/assets/images/cover/2.jpg'
 import bookCover3 from '@/assets/images/cover/3.jpg'
@@ -68,6 +69,7 @@ const createImageMap = () => {
   return iamgeMap
 }
 
+// ----- data------
 const bookList = ref<Book[]>([])
 const newMap = createImageMap()
 const loading = ref(true)
@@ -83,7 +85,6 @@ const fetchBookList = async () => {
       }
     })
   }
-  console.log('bookList', bookList.value)
 }
 
 const bannerList = ref<Book[]>([])
@@ -93,8 +94,6 @@ const getBannerList = () => {
   } else {
     bannerList.value = bookList.value.slice(0, 2)
   }
-
-  console.log('bannerList', bannerList.value)
 }
 
 const recommendationList = ref<Book[]>([])
@@ -115,9 +114,19 @@ const getRelease = () => {
   newReleaseList.value = bookList.value.slice(7, 11)
 }
 
+// ----- to book Detail ------
+const router = useRouter()
+const handleClick = (book: Book) => {
+  router.push({
+    name: 'Detail',
+    params: { id: book.id.toString() },
+    query: { url: book.url },
+  })
+}
+
+// ----- login ------
 const visible = ref(false)
 const handleConfirm = (userInfo: User) => {
-  //  to store the userName and password
   const store = useUserStore()
   store.login(userInfo)
 }
@@ -130,36 +139,22 @@ const showLoginView = () => {
 </script>
 
 <template>
-  <!-- <Suspense>
-    <template #default> -->
   <div style="position: relative">
     <Nav @showLoginView="showLoginView"></Nav>
     <Header></Header>
     <!-- <Empty></Empty> -->
     <div v-loading="loading">
-      <Banner :bannerList="bannerList"></Banner>
-      <Recommendation :todayRecommendations="recommendationList"></Recommendation>
-      <NewRelease :newRelease="newReleaseList"></NewRelease>
-      <PopularReads :popularReads="popularList"></PopularReads>
+      <Banner :bannerList="bannerList" @handle-click="handleClick"></Banner>
+      <Recommendation
+        :todayRecommendations="recommendationList"
+        @handle-click="handleClick"
+      ></Recommendation>
+      <NewRelease :newRelease="newReleaseList" @handle-click="handleClick"></NewRelease>
+      <PopularReads :popularReads="popularList" @handle-click="handleClick"></PopularReads>
     </div>
-
     <Footer></Footer>
-    <Login
-      class="login-view"
-      :dialog-visible="visible"
-      @confirm="handleConfirm"
-      @close="handleDialogClose"
-    ></Login>
+    <Login :dialog-visible="visible" @confirm="handleConfirm" @close="handleDialogClose"></Login>
   </div>
-
-  <!-- </template>
-  </Suspense> -->
 </template>
 
-<style>
-.login-view {
-  position: absolute;
-  right: 0;
-  top: 2rem;
-}
-</style>
+<style></style>
