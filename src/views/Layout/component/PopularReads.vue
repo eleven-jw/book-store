@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import type { Book, BookList } from '@/types/book'
+import type { Book, BookList } from '@/types/common'
 
 defineProps<{
   popularReads: BookList

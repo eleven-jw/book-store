@@ -2,7 +2,7 @@
 // import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
-import type { Book, BookList } from '@/types/book'
+import type { Book, BookList } from '@/types/common'
 
 defineProps<{
   bannerList: BookList

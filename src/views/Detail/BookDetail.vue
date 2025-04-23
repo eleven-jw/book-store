@@ -28,7 +28,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { fetchBookDetailFn, purchaseBookFn } from './api/api.ts'
-import type { Book } from '@/types/book'
+import type { Book } from '@/types/common.ts'
 import { ElMessage } from 'element-plus'
 
 const route = useRoute()

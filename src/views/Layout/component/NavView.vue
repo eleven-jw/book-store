@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { defineEmits } from 'vue'
-// import { useRouter } from 'vue-router'
-// const router = useRouter()
+import Avatar from '@/assets/images/avatar.jpg'
+import { useUserStore } from '@/stores/user'
+
+const store = useUserStore()
 const emit = defineEmits(['showLoginView'])
 const handleContact = () => {
   console.log('CONTACT')
@@ -9,16 +11,14 @@ const handleContact = () => {
 const handleAbout = () => {
   console.log('About')
 }
-const handleRegister = () => {
-  console.log('register')
-}
+
 const handleSignIn = () => {
   console.log('showLoginView')
   emit('showLoginView')
 }
-// const handleSelect = (key: string, keyPath: string[]) => {
-//   console.log(key, keyPath)
-// }
+const handleLogout = () => {
+  store.logout()
+}
 </script>
 
 <template>
@@ -35,25 +35,20 @@ const handleSignIn = () => {
           <div class="nav-content" @click="handleAbout">About Us</div>
         </div>
         <div style="color: white; display: flex">
-          <div class="nav-content register" @click="handleRegister">Register</div>
-          <div class="nav-content">|</div>
-          <div class="nav-content sign" @click="handleSignIn">Sign</div>
-          <!-- <el-link target="_blank" :underline="false" @click="handleRegister">Register</el-link>
-          |
-          <el-link target="_blank" :underline="false" @click="handleSignIn">Sign in</el-link> -->
+          <!-- <div class="nav-content register" @click="handleRegister">Register</div>
+          <div class="nav-content">|</div> -->
+          <div v-if="store.userInfo.name.length" class="nav-content sign">
+            <img width="25" height="25" class="avatar" :src="Avatar" />
+            <el-popover class="box-item" placement="bottom">
+              <div @click="handleLogout">Logout</div>
+              <template #reference>
+                <span>{{ store.userInfo.name }}</span>
+              </template>
+            </el-popover>
+          </div>
+          <div v-else class="nav-content sign" @click="handleSignIn">Sign</div>
         </div>
       </div>
-      <!-- <el-menu
-        class="el-menu-demo"
-        mode="horizontal"
-        style="background-color: black; text-color: white"
-        @select="handleSelect"
-      >
-        <el-menu-item index="1">About Us</el-menu-item>
-        <el-menu-item index="1">Contact Us</el-menu-item>
-        <el-menu-item index="3">Sign in</el-menu-item>
-        <el-menu-item index="4">Register</el-menu-item>
-      </el-menu> -->
     </el-col>
   </el-row>
 </template>
@@ -65,11 +60,18 @@ const handleSignIn = () => {
 }
 .nav-content {
   line-height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .sign {
   padding: 0 1.25rem 0 0.65rem;
 }
 .register {
   padding-right: 0.65rem;
+}
+.avatar {
+  border-radius: 50%;
+  margin-right: 0.5rem;
 }
 </style>

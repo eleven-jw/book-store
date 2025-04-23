@@ -1,5 +1,5 @@
 import request from '@/apis/request'
-import type { Book } from '@/types/book'
+import type { Book } from '@/types/common'
 // import type MyResponse from '@/types/globle'
 
 interface BookDetaiResponse {

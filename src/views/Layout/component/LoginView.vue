@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-// import { defineProps } from 'vue'
+import { withDefaults, defineProps, defineEmits } from 'vue'
 
-// defineProps<{
-//   bannerList: BookList
-// }>()
+const props = withDefaults(defineProps<{ dialogVisible: boolean }>(), {
+  dialogVisible: false,
+})
+
+const localVisible = ref(props.dialogVisible)
+watch(
+  () => props.dialogVisible,
+  (newValue) => {
+    localVisible.value = newValue
+    if (!newValue) resetForm()
+  },
+)
+const emit = defineEmits(['close', 'update:visible', 'cancel', 'confirm'])
 const form = ref({
   name: '',
   password: '',
@@ -25,35 +35,56 @@ const rules = ref<FormRules>({
     },
   ],
 })
-const handleLogin = () => {
-  // to validator
-  //  to store the userName and password
+
+const resetForm = () => {
+  formRef.value?.resetFields()
+}
+const handleClose = () => {
+  emit('update:visible', false)
+  emit('close')
+}
+const handleConfirm = async () => {
+  await formRef.value?.validate()
+  emit('confirm', { ...form.value })
+  handleClose()
+}
+const handleCancel = () => {
+  resetForm()
+  handleClose()
 }
 </script>
 
 <template>
   <div class="login-wrapper">
-    <el-card style="max-width: 30rem">
-      <template #header>
-        <div class="card-header">
-          <span>Login</span>
-        </div>
+    <el-dialog
+      v-model="localVisible"
+      title="Login"
+      width="20%"
+      :close-on-click-modal="true"
+      :before-close="handleClose"
+    >
+      <template #default>
+        <el-form :model="form" ref="formRef" :rules="rules">
+          <el-form-item prop="name" label="Username:">
+            <el-input v-model="form.name" placeholder="Please input UserName"></el-input>
+          </el-form-item>
+          <el-form-item prop="password" label="Password:">
+            <el-input
+              v-model="form.password"
+              type="password"
+              placeholder="Please input password"
+            ></el-input>
+          </el-form-item>
+        </el-form>
       </template>
 
-      <el-form ref="formRef" :model="form" label-width="auto" :rules="rules">
-        <el-form-item label="UserName">
-          <el-input v-model="form.name" />
-        </el-form-item>
-        <el-form-item label="Password">
-          <el-input v-model="form.password" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="handleLogin">Create</el-button>
-          <el-button>Cancel</el-button>
-        </el-form-item>
-      </el-form>
-      <!-- <template #footer>Footer content</template> -->
-    </el-card>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="handleCancel">取消</el-button>
+          <el-button type="primary" @click="handleConfirm">登录</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 

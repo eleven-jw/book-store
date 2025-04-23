@@ -10,3 +10,7 @@ export interface Book {
 export interface BookList {
   bookList: Book[]
 }
+export interface User {
+  name: string
+  password: string
+}

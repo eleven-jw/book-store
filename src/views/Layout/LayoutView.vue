@@ -9,7 +9,7 @@ import Footer from '@/views/Layout/component/FooterView.vue'
 import Login from '@/views/Layout/component/LoginView.vue'
 import { ref, onMounted } from 'vue'
 import { fetchBookListFun } from './api/api.ts'
-import type { Book } from '@/types/book'
+import type { Book, User } from '@/types/common.ts'
 import bookCover1 from '@/assets/images/cover/1.jpg'
 import bookCover2 from '@/assets/images/cover/2.jpg'
 import bookCover3 from '@/assets/images/cover/3.jpg'
@@ -20,6 +20,7 @@ import bookCover7 from '@/assets/images/cover/7.jpg'
 import bookCover8 from '@/assets/images/cover/8.jpg'
 import bookCover9 from '@/assets/images/cover/9.jpg'
 import defaultCover from '@/assets/images/cover/11.jpg'
+import { useUserStore } from '@/stores/user'
 onMounted(async () => {
   await fetchBookList()
 
@@ -114,10 +115,17 @@ const getRelease = () => {
   newReleaseList.value = bookList.value.slice(7, 11)
 }
 
-const showLogin = ref(false)
+const visible = ref(false)
+const handleConfirm = (userInfo: User) => {
+  //  to store the userName and password
+  const store = useUserStore()
+  store.login(userInfo)
+}
+const handleDialogClose = () => {
+  visible.value = false
+}
 const showLoginView = () => {
-  console.log('showLogin', showLogin.value)
-  showLogin.value = !showLogin.value
+  visible.value = !visible.value
 }
 </script>
 
@@ -136,7 +144,12 @@ const showLoginView = () => {
     </div>
 
     <Footer></Footer>
-    <Login class="login-view" v-if="showLogin"></Login>
+    <Login
+      class="login-view"
+      :dialog-visible="visible"
+      @confirm="handleConfirm"
+      @close="handleDialogClose"
+    ></Login>
   </div>
 
   <!-- </template>
